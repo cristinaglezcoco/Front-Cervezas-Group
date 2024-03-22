@@ -76,7 +76,7 @@ export default function NavBarHome() {
             </Link>
           </li>
           <li>
-            <Link to={"/products-gallery"}>
+            <Link to={"/gallery"}>
               <span>Galeria</span>
             </Link>
           </li>

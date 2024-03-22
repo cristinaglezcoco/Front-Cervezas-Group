@@ -40,7 +40,7 @@ function NavBarHeader({ title }) {
                 </Link>
               </li>
               <li>
-                <Link to={"/products-gallery"}>
+                <Link to={"/gallery"}>
                   <span>Galeria</span>
                 </Link>
               </li>
@@ -127,7 +127,7 @@ export function NavBarMobile({ active, handleNav }) {
           </Link>
         </li>
         <li>
-          <Link to="/products-gallery">
+          <Link to="/gallery">
             <span>Galeria</span>
             <FaAngleRight />
           </Link>
