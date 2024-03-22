@@ -14,12 +14,12 @@ export default function NavBarHome() {
       <div className="navbar-1">
         <ul className="navbar-social">
           <li>
-            <a href="#" target="_self">
+            <a href="https://www.facebook.com/cervezascolmo/?locale=es_ES" target="_blank" rel="noopener noreferrer">
               <FaFacebook />
             </a>
           </li>
           <li>
-            <a href="#" target="_self">
+            <a href="https://www.instagram.com/cervezascolmo/" target="_blank" rel="noopener noreferrer">
               <FaInstagram />
             </a>
           </li>
