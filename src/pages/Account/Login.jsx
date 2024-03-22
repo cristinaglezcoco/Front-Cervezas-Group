@@ -1,15 +1,25 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { API } from "./../../components/axios/api";
 import '../../pages/Account/_login.scss'
 
 function Login() {
+
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+
+  const [errorMessage, setErrorMessage] = useState("");
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      navigate("/");
+    }
+  }, [navigate]);
 
   const handleInput = (event) => {
     const { id, value } = event.target;
@@ -30,13 +40,24 @@ function Login() {
       localStorage.setItem("user_id", JSON.stringify(result.data.getUser._id));
       //   //console.log(result.data.getUser._id);
       localStorage.setItem("token", result.data.token);
-      //console.log('Token establecido correctamente:', localStorage.getItem('token'), 'User:', localStorage.getItem('user'));
+   
 
       navigate("/"); //CAMBIAR A MYAREA O EL LINK QUE SEA
     } catch (error) {
       console.error(error);
+
+      if (error.response) {
+        console.log(error.response); // Agrega este console.log para ver la respuesta del servidor
+        if (error.response.data.message === 'invalid password') {
+          setErrorMessage("Contraseña incorrecta, intentelo de nuevo.")
+        } else if (error.response.data.message === 'user not found') {
+          setErrorMessage("Email incorrecto, intentelo de nuevo.")
+        } else {
+          setErrorMessage("Las credenciales son incorrectas, intentelo de nuevo")
+        }
+      }
     }
-  };
+  }
 
   return (
     <>
@@ -53,6 +74,8 @@ function Login() {
           <input onChange={handleInput} type="password" id="password" />
         </div>
 
+        {errorMessage && <div className="login-error">{errorMessage}</div>}
+
         <div className="login-area">
           <button type="submit" className="login-btn">
             Conectarse
@@ -68,5 +91,6 @@ function Login() {
     </>
   );
 }
+
 
 export default Login;
