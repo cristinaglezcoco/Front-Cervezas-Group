@@ -1,0 +1,88 @@
+.container-login {
+
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .login-form{
+        width: 600px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 15px;
+        padding: 30px;
+        margin: 50px 0;
+        border: 3px solid lightgray;
+    
+        .form-info{
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+
+            >label {
+
+                font-family: "Mulish";
+                font-size: 20px;
+                padding: 10px 0;
+            }
+    
+            >input{
+                border-radius: 30px;
+                padding: 20px;
+                border: 2px solid lightgray;
+
+                font-family: "Mulish";
+            }
+        }
+    
+        .login-area {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 15px;
+    
+            .login-btn {
+    
+                background-color: var(--naranja);
+                border: none;
+                outline: none;
+                padding: 15px;
+                border-radius: 30px;
+                width: 150px;
+                margin-top: 15px;
+    
+                cursor: pointer;
+    
+                font-size: 16px;
+                font-family: "Mulish";
+                font-weight: bold;
+                color: #fff;
+            }
+    
+            .login-mssg {
+    
+                &:hover {
+                    border-bottom: 2px solid #D8732D ;
+                    transform: scale(1.05);
+                    transition: transform 0.5s ease-in-out;
+                }
+    
+                >a {
+                    color: #000;
+                    font-family: "Mulish";
+                }
+                
+            
+            }
+        }
+        
+    }
+    
+
+}
+
