@@ -18,7 +18,7 @@ export const API = axios.create({
 });
 
 // //make a get request to /cervezas
-export const getCervezas = () => API.get("/cervezas");
+//export const getCervezas = () => API.get("/cervezas");
 
 // //for create users
 

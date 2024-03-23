@@ -1,9 +1,12 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { API } from "./../../components/axios/api";
 import '../../pages/Account/_login.scss'
+import { UserContext } from "../../components/context/userContext";
 
 function Login() {
+
+  const userLoginContext = useContext(UserContext);
 
   const navigate = useNavigate();
 
@@ -41,6 +44,7 @@ function Login() {
       //   //console.log(result.data.getUser._id);
       localStorage.setItem("token", result.data.token);
    
+      userLoginContext.addUser(result.data)
 
       navigate("/"); //CAMBIAR A MYAREA O EL LINK QUE SEA
     } catch (error) {
