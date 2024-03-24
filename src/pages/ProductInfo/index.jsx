@@ -110,7 +110,7 @@ export const Product = ({ product }) => {
             <span>Otros: </span> <span>{otros}</span>
           </li>
         </ul>
-        <p className="product-info-2-price">€ {product?.price ?? "00.00"}</p>
+        <p className="product-info-2-price">€ {product.precio.toFixed(2)}</p>
         <div className="product-infor-2-cart">
           <div className="product-info-2-cart_count">
             <span>{quantity}</span>

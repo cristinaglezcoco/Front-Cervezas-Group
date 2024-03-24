@@ -16,6 +16,8 @@ import {
 } from "../components/context/userContext";
 import ProductInfo from "../pages/ProductInfo";
 import { CartProvider } from "./context/cartContext";
+import AuthRoute from "./AuthRoute/AuthRoute";
+import Login from "../pages/Account/Login";
 
 function App() {
   const saveUser = useUsersContext();
@@ -29,12 +31,13 @@ function App() {
               <Route path="/account" element={<Account />} />
               <Route path="/about" element={<About />} />
               <Route path="/cart" element={<Cart />} />
-              <Route path="/checkout" element={<Checkout />} />
+              <Route path="/checkout" element={<AuthRoute element={<Checkout/>}/>}></Route>
               <Route path="/product/:id" element={<ProductInfo />} />
               <Route path="/contacts" element={<Contacts />} />
               <Route path="/products" element={<Products />} />
               <Route path="/gallery" element={<Gallery />} />
               <Route path="/register" element={<Register />} />
+              <Route path="/login" element={<Account/>} />
             </Routes>
           </CartProvider>
         </BeersProvider>

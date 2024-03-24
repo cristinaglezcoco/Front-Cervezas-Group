@@ -46,7 +46,7 @@ function Login() {
    
       userLoginContext.addUser(result.data)
 
-      navigate("/"); //CAMBIAR A MYAREA O EL LINK QUE SEA
+      navigate("/checkout"); //CAMBIAR A MYAREA O EL LINK QUE SEA
     } catch (error) {
       console.error(error);
 

@@ -2,8 +2,7 @@ import NavBarHeader from "../../components/shared/NavBarHeader";
 import Footer from "../../components/shared/Footer";
 import "./_products.scss";
 import Container from "../../components/shared/Container";
-import { useContext, useEffect, useState } from "react";
-import { getCervezas } from "../../components/axios/api";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { BeersContext } from "../../components/context/beersContext";
 import { CartContext } from "../../components/context/cartContext";
@@ -63,7 +62,7 @@ export const ProductItem = ({ producto }) => {
         <p>
           {producto.graduacion} | {producto.fermentacion} | {producto.color}
         </p>
-        <p>Precio: €{producto?.price ?? "0.00"}</p>
+        <p>Precio: {producto.precio.toFixed(2)} €</p>
         <button onClick={handleAddToCart}>Añadir al carrito</button>
       </div>
     </div>
