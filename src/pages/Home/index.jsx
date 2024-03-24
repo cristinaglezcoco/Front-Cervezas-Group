@@ -7,7 +7,7 @@ import HomePart2 from "./HomePart2";
 import HomePart5 from "./HomePart5";
 import HomePart1 from "./HomePart1";
 import HomePart7 from "./HomePart7";
-import "./home.scss";
+import "./_home.scss";
 export default function Home() {
   return (
     <>

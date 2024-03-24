@@ -42,7 +42,7 @@ export const CheckOutForm = () => {
   return (
     <form className="checkout-form">
       <fieldset>
-        <label>nombres</label>
+        <label>Nombre</label>
         <input type="text" />
       </fieldset>
       <fieldset>
@@ -50,7 +50,7 @@ export const CheckOutForm = () => {
         <input type="text" />
       </fieldset>
       <fieldset>
-        <label>nombre de empresa (opcional)</label>
+        <label>Nombre de Empresa (Opcional)</label>
         <input type="text" />
       </fieldset>
       <fieldset>
@@ -111,7 +111,7 @@ export const CheckOutOrderDetails = () => {
         <div className="checkout-order-details-2">
           <div>
             <div>
-              <span>subtotal</span>
+              <span>Subtotal</span>
             </div>
             <div>
               <span>€ {subtotal.toFixed(2)}</span>
@@ -119,7 +119,7 @@ export const CheckOutOrderDetails = () => {
           </div>
           <div>
             <div>
-              <span>impuestos</span>
+              <span>Impuestos</span>
             </div>
             <div>
               <span>€ {taxes.toFixed(2)}</span>
@@ -127,7 +127,7 @@ export const CheckOutOrderDetails = () => {
           </div>
           <div>
             <div>
-              <span>total</span>
+              <span>Total</span>
             </div>
             <div>
               <span>
@@ -144,7 +144,7 @@ export const CheckOutOrderDetails = () => {
 export const CheckoutOrderNote = () => {
   return (
     <div className="checkout-order-note">
-      <span>Order notes (optional)</span>
+      <span>Comentarios (Opcional)</span>
       <textarea name="" id="" cols="30" rows="10"></textarea>
     </div>
   );

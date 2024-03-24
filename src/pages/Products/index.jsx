@@ -64,7 +64,7 @@ export const ProductItem = ({ producto }) => {
           {producto.graduacion} | {producto.fermentacion} | {producto.color}
         </p>
         <p>Precio: €{producto?.price ?? "0.00"}</p>
-        <button onClick={handleAddToCart}>Add To Cart</button>
+        <button onClick={handleAddToCart}>Añadir al carrito</button>
       </div>
     </div>
   );
