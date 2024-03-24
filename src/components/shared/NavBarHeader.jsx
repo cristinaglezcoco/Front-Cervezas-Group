@@ -2,15 +2,27 @@ import { FaShoppingBag, FaTimes, FaUser } from "react-icons/fa";
 import { FiAlignRight } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { FaAngleRight } from "react-icons/fa";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Container from "./Container";
-
-
+import { CartContext } from "../context/cartContext";
 
 function NavBarHeader({ title }) {
-  
   const [active, setActive] = useState(false);
+  const { totalItems } = useContext(CartContext);
   const handleNav = (active) => setActive(active);
+
+  const path = window.location.pathname;
+  const createActiveClassName = (givenPath) =>
+    path === givenPath ? "active" : "";
+    
+    
+    const scrollToTop = () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    };
+    useEffect (() => scrollToTop(), [path]);
 
   return (
     <>
@@ -25,27 +37,36 @@ function NavBarHeader({ title }) {
           <div className="nb-menu">
             <ul>
               <li>
-                <Link className="active" to="/">
+                <Link className={createActiveClassName("/")} to="/">
                   <span>Inicio</span>
                 </Link>
               </li>
               <li>
-                <Link to="/about">
+                <Link className={createActiveClassName("/about")} to="/about">
                   <span>Quienes Somos </span>
                 </Link>
               </li>
               <li>
-                <Link to="/shop">
+                <Link
+                  className={createActiveClassName("/products")}
+                  to="/products"
+                >
                   <span>Productos </span>
                 </Link>
               </li>
               <li>
-                <Link to={"/gallery"}>
+                <Link
+                  className={createActiveClassName("/gallery")}
+                  to={"/gallery"}
+                >
                   <span>Galeria</span>
                 </Link>
               </li>
               <li>
-                <Link to="/contacts">
+                <Link
+                  className={createActiveClassName("/contacts")}
+                  to="/contacts"
+                >
                   <span>Contacto</span>
                 </Link>
               </li>
@@ -62,7 +83,7 @@ function NavBarHeader({ title }) {
                 <div className="cart-navbar">
                   <Link to="/cart">
                     <span className="cart-contents header-cart-count count">
-                      0
+                      {totalItems}
                     </span>
                     <FaShoppingBag />
                   </Link>
@@ -98,6 +119,7 @@ function NavBarHeader({ title }) {
 export default NavBarHeader;
 
 export function NavBarMobile({ active, handleNav }) {
+  const { totalItems } = useContext(CartContext);
   return (
     <div className={"mb-nav " + (active ? "active" : "")}>
       <div className="mb-nav-top">
@@ -121,7 +143,7 @@ export function NavBarMobile({ active, handleNav }) {
           </Link>
         </li>
         <li>
-          <Link to="/shop">
+          <Link to="/products">
             <span>Productos</span>
             <FaAngleRight />
           </Link>
@@ -141,10 +163,10 @@ export function NavBarMobile({ active, handleNav }) {
       </ul>
       <div className="mb-nav-foot">
         <ul>
-          <li>
-            <span>0</span>
+          <Link to={"/cart"}>
+            <span>{totalItems}</span>
             <FaShoppingBag />
-          </li>
+          </Link>
         </ul>
         <Link to={"/account"}>
           <FaUser />

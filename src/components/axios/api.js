@@ -17,9 +17,5 @@ export const API = axios.create({
   baseURL: "http://localhost:5001",
 });
 
-// //make a get request to /cervezas
-//export const getCervezas = () => API.get("/cervezas");
-
-// //for create users
-
-// export const createUser = (formData) => API.post("/users/register", formData);
+export const getCervezas = () => API.get("/cervezas");
+export const getCerveza = (id) => API.get(`/cervezas/${id}`);

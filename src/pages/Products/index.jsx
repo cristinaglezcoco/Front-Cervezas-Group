@@ -1,50 +1,34 @@
 import NavBarHeader from "../../components/shared/NavBarHeader";
 import Footer from "../../components/shared/Footer";
 import "./_products.scss";
-
 import Container from "../../components/shared/Container";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
+import { getCervezas } from "../../components/axios/api";
+import { Link } from "react-router-dom";
 import { BeersContext } from "../../components/context/beersContext";
+import { CartContext } from "../../components/context/cartContext";
 
 function Products() {
-  const { beers } = useContext(BeersContext);
   return (
     <>
       <NavBarHeader title="Productos" />
 
       <Container>
-        <div className="products-space">
-          <div className="hs-carousel-1">
-            <div className="hs-car-icons">
-              <img src="/images/icon-detalle_6.png" alt="" />
-              <img src="/images/icon-detalle_5.png" alt="" />
-            </div>
-            <h1>Descubre Nuestra Cervezas</h1>
-            <p>
-              Explora un mundo de sabor con nuestras cervezas artesanales
-              únicas. Descubre la pasión y la calidad en cada sorbo, disponible
-              ahora para tu disfrute.
-            </p>
-            <section className="container-beers">
-
-              <div className="container-beers__each">
-                {beers.map((beer) => (
-                  <figure key ={beer._id}>
-                    <img src={beer.picture} />
-                    <figcaption>
-                      <span> {beer.nombre} </span>
-                      <span> {beer.graduacion} | {beer.fermentacion} | {beer.color} </span>
-                      <p> Precio: 3.20€ </p>
-                      <button className="purchase">
-                      Añadir al carrito
-                      </button> 
-                    </figcaption>
-                  </figure>
-                ))} 
-              </div>
-            </section>
+        <div className="products-space"></div>
+        <div className="hs-carousel-1">
+          <div className="hs-car-icons">
+            <img src="/images/icon-detalle_6.png" alt="" />
+            <img src="/images/icon-detalle_5.png" alt="" />
           </div>
+          <h1>Descubre Nuestra Cervezas</h1>
+          <p>
+            Explora un mundo de sabor con nuestras cervezas artesanales únicas.
+            Descubre la pasión y la calidad en cada sorbo, disponible ahora para
+            tu disfrute.
+          </p>
         </div>
+        <ProductsList />
+        <ProductsPagination />
       </Container>
       <Footer />
     </>
@@ -52,3 +36,50 @@ function Products() {
 }
 
 export default Products;
+
+export const ProductsList = () => {
+  const { beers } = useContext(BeersContext);
+  return (
+    <div className="products-list">
+      {beers.map((producto) => (
+        <ProductItem key={producto._id} producto={producto} />
+      ))}
+    </div>
+  );
+};
+
+export const ProductItem = ({ producto }) => {
+  const { addToCart } = useContext(CartContext);
+  const handleAddToCart = () => {
+    addToCart(producto, 1);
+  };
+  return (
+    <div className="product-item">
+      <Link to={"/product/" + producto._id} className="product-item-img">
+        <img src={producto.picture} alt="" />
+      </Link>
+      <div className="product-item-info">
+        <h3>{producto.nombre}</h3>
+        <p>
+          {producto.graduacion} | {producto.fermentacion} | {producto.color}
+        </p>
+        <p>Precio: €{producto?.price ?? "0.00"}</p>
+        <button onClick={handleAddToCart}>Add To Cart</button>
+      </div>
+    </div>
+  );
+};
+
+export const ProductsPagination = () => {
+  return (
+    <div className="products-pagination">
+      <div>
+        <button className="active">1</button>
+        <button>2</button>
+      </div>
+      <button>
+        <img src="/images/icon-arrow-product-04.png" alt="arrow icon" />
+      </button>
+    </div>
+  );
+};

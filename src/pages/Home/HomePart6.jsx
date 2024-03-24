@@ -1,6 +1,6 @@
 import Container from "../../components/shared/Container";
 import { MdOutlinePlayCircle } from "react-icons/md";
-function VideoSection() {
+function HomePart6() {
   return (
     <div className={"hvs"}>
       <Container>
@@ -44,4 +44,4 @@ function VideoSection() {
   );
 }
 
-export default VideoSection;
+export default HomePart6;
