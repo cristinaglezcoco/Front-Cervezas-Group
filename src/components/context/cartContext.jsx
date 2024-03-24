@@ -72,7 +72,7 @@ export const CartProvider = ({ children }) => {
     // Actualiza el subtotal cada vez que cambia el carrito
     const countSubtotal = () => {
       return cart.reduce(
-        (acc, item) => acc + (item?.price ?? 0) * item.quantity,
+        (acc, item) => acc + (item.precio.toFixed(2)) * item.quantity,
         0
       );
     };
