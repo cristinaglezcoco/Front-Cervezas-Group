@@ -1,0 +1,123 @@
+.product-info {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 150px;
+  }
+  
+  .product-info-1 {
+    height: 500px;
+    position: relative;
+    & img {
+      position: absolute;
+      height: 100%;
+      object-fit: contain;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+  
+  .product-info-2 {
+    width: max-content;
+    margin: auto;
+    font-family: "Mulish";
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    & .product-info-2-border {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      border-bottom: 2px dashed #aaa;
+      width: max-content;
+      padding-bottom: 10px;
+    }
+    & p {
+      font-size: 20px;
+    }
+  
+    & ul {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      & li {
+        &::marker {
+          color: var(--naranja);
+        }
+        list-style: inside;
+        font-size: 18px;
+        & span:first-child {
+          font-weight: 700;
+        }
+      }
+      padding: 20px;
+    }
+    & .product-info-2-price {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--naranja);
+    }
+  }
+  .product-infor-2-cart {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 20px;
+    padding: 15px 0;
+    & .product-info-2-cart_count {
+      display: flex;
+      border: 1px solid #aaa;
+      padding: 7px 10px;
+      align-items: center;
+      gap: 25px;
+      & > div {
+        display: flex;
+        flex-direction: column;
+        & button {
+          border: none;
+          background-color: #fff;
+          cursor: pointer;
+          &:hover {
+            background-color: var(--naranja);
+            color: #fff;
+          }
+        }
+      }
+    }
+    & > button {
+      font-size: 18px;
+      font-weight: bold;
+      background-color: var(--naranja);
+      padding: 10px 0;
+      border: none;
+      width: 300px;
+      border-radius: 30px;
+      transition: cubic-bezier(0.075, 0.82, 0.165, 1) 0.2s;
+      cursor: pointer;
+      &:hover {
+        background-color: #000;
+        color: #fff;
+      }
+    }
+  }
+  
+  @media (min-width: 900px) {
+    .product-info {
+      flex-direction: row;
+      align-items: center;
+    }
+    .product-info-1 {
+      flex: 1;
+      height: 600px;
+      display: flex;
+      & img {
+        right: 0;
+        left: auto;
+        transform: translateX(0);
+      }
+    }
+    .product-info-2 {
+      flex: 1;
+    }
+  }
+  

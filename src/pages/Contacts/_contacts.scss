@@ -6,7 +6,6 @@
     align-items: flex-start;
     justify-content: center;
     padding: 40px;
-
     .contact-title {
 
         width: 100%;
@@ -14,11 +13,13 @@
         flex-direction: row;
         align-items: center;
         gap: 15px;
+
         
         >h2 {
             font-family: "Mulish";
             font-size: 25px;
             font-weight: bold;
+            
         }
 
         .contact-line {
@@ -36,13 +37,19 @@
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
+        
+
        
 
         .contact-logo {
 
-            width: 35%;
             height: auto;
+            display: none;
 
+            @media (min-width: 768px) {
+                display: block;
+                width: 700px;
+            }
             >img {
                 
                 width: 100%;
@@ -55,10 +62,17 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+            width: 100%;
+
+            //agrega una media query para el contact form sea 50% de width
+            @media (min-width: 768px) {
+                margin: auto;
+                width: 50%;
+            }
 
             .contact-form__info {
 
-                width: 600px;
+                width: 100%;
                 display: flex;
                 flex-direction: column;
                 justify-content: center;

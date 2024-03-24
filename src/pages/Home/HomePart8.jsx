@@ -22,7 +22,7 @@ const GalleryItem = ({ image }) => {
   );
 };
 
-function ImagesGallery() {
+function HomePart8() {
   return (
     <div className={"hs-gallery"}>
       {images.map((image, index) => (
@@ -32,4 +32,4 @@ function ImagesGallery() {
   );
 }
 
-export default ImagesGallery;
+export default HomePart8;

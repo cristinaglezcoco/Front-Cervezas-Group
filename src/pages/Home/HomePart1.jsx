@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import Container from "../../components/shared/Container";
-import NavBarHome from "./NavBarHome";
+import NavBarHome from "../../components/shared/NavBarHome";
 export default function HomePart1() {
   return (
     <section className="hs1">

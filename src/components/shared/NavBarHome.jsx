@@ -2,11 +2,22 @@ import { FiAlignRight } from "react-icons/fi";
 import { FaFacebook, FaInstagram, FaShoppingBag, FaUser } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { NavBarMobile } from "../../components/shared/NavBarHeader";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { CartContext } from "../../components/context/cartContext";
 
 export default function NavBarHome() {
   const [active, setActive] = useState(false);
   const handleNav = (active) => setActive(active);
+  const { totalItems } = useContext(CartContext);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+  useEffect (() => scrollToTop(), []);
+
 
   return (
     <nav className="navbar">
@@ -14,12 +25,12 @@ export default function NavBarHome() {
       <div className="navbar-1">
         <ul className="navbar-social">
           <li>
-            <a href="https://www.facebook.com/cervezascolmo/?locale=es_ES" target="_blank" rel="noopener noreferrer">
+            <a href="#" target="_self">
               <FaFacebook />
             </a>
           </li>
           <li>
-            <a href="https://www.instagram.com/cervezascolmo/" target="_blank" rel="noopener noreferrer">
+            <a href="#" target="_self">
               <FaInstagram />
             </a>
           </li>
@@ -42,7 +53,9 @@ export default function NavBarHome() {
           <li>
             <div className="cart-navbar">
               <Link to="/cart">
-                <span className="cart-contents header-cart-count count">0</span>
+                <span className="cart-contents header-cart-count count">
+                  {totalItems}
+                </span>
                 <FaShoppingBag />
               </Link>
             </div>
@@ -61,7 +74,7 @@ export default function NavBarHome() {
       <div className="navbar-2">
         <ul>
           <li>
-            <Link to="/">
+            <Link className="active" to="/">
               <span>Inicio</span>
             </Link>
           </li>
@@ -71,7 +84,7 @@ export default function NavBarHome() {
             </Link>
           </li>
           <li>
-            <Link to="/shop">
+            <Link to="/products">
               <span>Productos </span>
             </Link>
           </li>
