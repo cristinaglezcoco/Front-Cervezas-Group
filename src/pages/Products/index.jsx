@@ -34,7 +34,7 @@ function Products() {
                     <figcaption>
                       <span> {beer.nombre} </span>
                       <span> {beer.graduacion} | {beer.fermentacion} | {beer.color} </span>
-                      <p> Precio: 3.20€ </p>
+                      {/* <p> Precio: 3.20€ </p> */}
                       <button className="purchase">
                       Añadir al carrito
                       </button> 
