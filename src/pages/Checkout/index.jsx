@@ -7,9 +7,11 @@ import { CartContext } from "../../components/context/cartContext";
 import { EmptyCart } from "../Cart";
 import { useNavigate } from "react-router-dom";
 import { FaCheckCircle, FaTimes } from "react-icons/fa";
+
 function Checkout() {
   const { isEmpty } = useContext(CartContext);
   const [successCheckout, setSuccessCheckout] = useState(false);
+  
   return (
     <>
       {successCheckout && (
@@ -22,12 +24,7 @@ function Checkout() {
         ) : (
           <div className="checkout-content">
             <h1>Formulario de Compra</h1>
-            <div className="checkout-form-content">
-              <CheckOutForm />
-              <CheckoutOrderNote />
-            </div>
-            <CheckOutOrderDetails />
-            <ChekoutOrderPayment setSuccessCheckout={setSuccessCheckout} />
+            <CheckOutForm setSuccessCheckout={setSuccessCheckout} />
           </div>
         )}
       </Container>
@@ -38,56 +35,160 @@ function Checkout() {
 
 export default Checkout;
 
-export const CheckOutForm = () => {
-  return (
-    <form className="checkout-form">
-      <fieldset>
-        <label>Nombre</label>
-        <input type="text" />
-      </fieldset>
-      <fieldset>
-        <label>Apellidos</label>
-        <input type="text" />
-      </fieldset>
-      <fieldset>
-        <label>Nombre de Empresa (Opcional)</label>
-        <input type="text" />
-      </fieldset>
-      <fieldset>
-        <label>País</label>
-        <input type="text" />
-      </fieldset>
-      <fieldset>
-        <label>Dirección</label>
-        <input type="text" />
-      </fieldset>
-      <fieldset>
-        <label>Provincia</label>
-        <input type="text" />
-      </fieldset>
-      <fieldset>
-        <label>Ciudad</label>
-        <input type="text" />
-      </fieldset>
+export const CheckOutForm = ({ setSuccessCheckout }) => {
+  const [formData, setFormData] = useState({
+    name: "",
+    surname: "",
+    company: "",
+    country: "",
+    adress: "",
+    province: "",
+    city: "",
+    postcode: "",
+    telephone: "",
+    email: "",
+  });
 
-      <fieldset>
-        <label>Postcode / ZIP</label>
-        <input type="text" />
-      </fieldset>
-      <fieldset>
-        <label>Teléfono</label>
-        <input type="text" />
-      </fieldset>
-      <fieldset>
-        <label>Email</label>
-        <input type="text" />
-      </fieldset>
+  const [errorInfoForm, setErrorInfoForm] = useState("");
+
+  const handleInputChange = (e) => {
+    const { id, value } = e.currentTarget;
+    setFormData({
+      ...formData,
+      [id]: value,
+    });
+  };
+
+  const infoForm = async (e) => {
+    const requiredFields = [
+      "name",
+      "surname",
+      "email",
+      "telephone",
+      "adress",
+      "postcode",
+      "province",
+      "city",
+      "country",
+    ];
+    const missingFields = requiredFields.filter((field) => !formData[field]);
+    if (missingFields.length > 0) {
+      setErrorInfoForm(
+        "Faltan los siguientes datos: " + missingFields.join(", ")
+      );
+      missingFields.forEach((field) => {
+        const inputElement = document.getElementById(field);
+        inputElement.classList.add("required-field");
+      });
+      return;
+    } else {
+      e.preventDefault();
+      setSuccessCheckout(true);
+    }
+  };
+  
+  return (
+    <form>
+      <div className="checkout-form-content">
+        <div className="checkout-form" onSubmit={infoForm}>
+          <fieldset>
+            <label>Nombre</label>
+            <input
+              required
+              type="text"
+              id="name"
+              onChange={handleInputChange}
+            />
+          </fieldset>
+          <fieldset>
+            <label>Apellidos</label>
+            <input
+              required
+              type="text"
+              id="surname"
+              onChange={handleInputChange}
+            />
+          </fieldset>
+          <fieldset>
+            <label>Nombre de Empresa (Opcional)</label>
+            <input type="text" id="company" onChange={handleInputChange} />
+          </fieldset>
+          <fieldset>
+            <label>País</label>
+            <input
+              required
+              type="text"
+              id="country"
+              onChange={handleInputChange}
+            />
+          </fieldset>
+          <fieldset>
+            <label>Dirección</label>
+            <input
+              required
+              type="text"
+              id="adress"
+              onChange={handleInputChange}
+            />
+          </fieldset>
+          <fieldset>
+            <label>Provincia</label>
+            <input
+              required
+              type="text"
+              id="province"
+              onChange={handleInputChange}
+            />
+          </fieldset>
+          <fieldset>
+            <label>Ciudad</label>
+            <input
+              required
+              type="text"
+              id="city"
+              onChange={handleInputChange}
+            />
+          </fieldset>
+          <fieldset>
+            <label>Postcode / ZIP</label>
+            <input
+              required
+              type="text"
+              id="postcode"
+              onChange={handleInputChange}
+            />
+          </fieldset>
+          <fieldset>
+            <label>Teléfono</label>
+            <input
+              required
+              type="text"
+              id="telephone"
+              onChange={handleInputChange}
+            />
+          </fieldset>
+          <fieldset>
+            <label>Email</label>
+            <input
+              required
+              type="text"
+              id="email"
+              onChange={handleInputChange}
+            />
+          </fieldset>
+          {errorInfoForm && <p className="error-message">{errorInfoForm}</p>}
+        </div>
+        <CheckoutOrderNote />
+      </div>
+      <CheckOutOrderDetails />
+      <ChekoutOrderPayment infoForm={infoForm} />
     </form>
   );
 };
 
 export const CheckOutOrderDetails = () => {
   const { cart, subtotal, taxes, total } = useContext(CartContext);
+  
   return (
     <div className="checkout-order-details">
       <h1>Detalles de tu orden</h1>
@@ -103,7 +204,8 @@ export const CheckOutOrderDetails = () => {
                 <span>
                   {item.nombre} x {item.quantity}
                 </span>
-                <span>€ {(item?.price ?? 0) * item.quantity}</span>
+                {/* no salen 2 decimales */}
+                <span> {item.precio.toFixed(2) * item.quantity} €</span>
               </div>
             );
           })}
@@ -114,7 +216,7 @@ export const CheckOutOrderDetails = () => {
               <span>Subtotal</span>
             </div>
             <div>
-              <span>€ {subtotal.toFixed(2)}</span>
+              <span> {subtotal.toFixed(2)} €</span>
             </div>
           </div>
           <div>
@@ -122,7 +224,7 @@ export const CheckOutOrderDetails = () => {
               <span>Impuestos</span>
             </div>
             <div>
-              <span>€ {taxes.toFixed(2)}</span>
+              <span> {taxes.toFixed(2)} €</span>
             </div>
           </div>
           <div>
@@ -131,7 +233,7 @@ export const CheckOutOrderDetails = () => {
             </div>
             <div>
               <span>
-                <strong>€ {total.toFixed(2)}</strong>
+                <strong> {total.toFixed(2)} €</strong>
               </span>
             </div>
           </div>
@@ -150,7 +252,7 @@ export const CheckoutOrderNote = () => {
   );
 };
 
-export const ChekoutOrderPayment = ({ setSuccessCheckout }) => {
+export const ChekoutOrderPayment = ({ infoForm }) => {
   return (
     <div className="checkout-order-payment">
       <div className="check-payment-type">
@@ -184,7 +286,7 @@ export const ChekoutOrderPayment = ({ setSuccessCheckout }) => {
         </div>
       </div>
       <div className="check-o-btn">
-        <button onClick={() => setSuccessCheckout(true)}>
+        <button type="submit" onClick={infoForm}>
           Realizar Compra
         </button>
       </div>
@@ -195,11 +297,13 @@ export const ChekoutOrderPayment = ({ setSuccessCheckout }) => {
 export const SuccesModal = ({ setSuccessCheckout }) => {
   const { clearCart } = useContext(CartContext);
   const navigate = useNavigate();
+
   const handleClearCart = () => {
     clearCart();
     setSuccessCheckout(false);
     navigate("/");
   };
+  
   return (
     <div className="checkout-succes-modal">
       <div className="checkout-modal-content">
