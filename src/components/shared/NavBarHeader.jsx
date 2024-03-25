@@ -7,6 +7,7 @@ import Container from "./Container";
 import { CartContext } from "../context/cartContext";
 
 function NavBarHeader({ title }) {
+
   const [active, setActive] = useState(false);
   const { totalItems } = useContext(CartContext);
   const handleNav = (active) => setActive(active);

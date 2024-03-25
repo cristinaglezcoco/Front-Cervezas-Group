@@ -12,7 +12,7 @@ function Cart() {
   const { isEmpty } = useContext(CartContext);
   return (
     <>
-      <NavBarHeader title="Cart" />
+      <NavBarHeader title="Carrito" />
 
       <Container>
         {isEmpty() ? (
@@ -33,6 +33,7 @@ export default Cart;
 
 export const CartList = () => {
   const { cart } = useContext(CartContext);
+  
   return (
     <div className="cart-list">
       <div className="cart-list-header">

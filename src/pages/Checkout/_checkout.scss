@@ -39,6 +39,13 @@
   .checkout-form-content {
     display: flex;
     flex-direction: column;
+
+    .error-form {
+      color: #ff0000;
+      font-family: "Mulish";
+      font-size: 15px;
+      padding: 10px 0px 0px 15px;
+    }
   }
   .checkout-order-note {
     display: flex;
@@ -196,6 +203,14 @@
   .checkout-order-payment {
     display: flex;
     flex-direction: column;
+
+    .error-payment {
+      color: #ff0000;
+      font-family: "Mulish";
+      font-size: 18px;
+      padding: 20px 0px 0px 15px;
+    }
+
     & .check-o-btn {
       display: flex;
       padding: 50px 0;

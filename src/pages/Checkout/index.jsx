@@ -8,9 +8,11 @@ import { EmptyCart } from "../Cart";
 import { useNavigate } from "react-router-dom";
 import { FaCheckCircle, FaTimes } from "react-icons/fa";
 
+
 function Checkout() {
   const { isEmpty } = useContext(CartContext);
   const [successCheckout, setSuccessCheckout] = useState(false);
+
   
   return (
     <>
@@ -36,17 +38,18 @@ function Checkout() {
 export default Checkout;
 
 export const CheckOutForm = ({ setSuccessCheckout }) => {
+
   const [formData, setFormData] = useState({
-    name: "",
-    surname: "",
-    company: "",
-    country: "",
-    adress: "",
-    province: "",
-    city: "",
-    postcode: "",
-    telephone: "",
-    email: "",
+    Nombre: "",
+    Apellidos: "",
+    Empresa: "",
+    País: "",
+    Dirección: "",
+    Provincia: "",
+    Ciudad: "",
+    CódigoPostal: "",
+    Teléfono: "",
+    Email: "",
   });
 
   const [errorInfoForm, setErrorInfoForm] = useState("");
@@ -60,43 +63,39 @@ export const CheckOutForm = ({ setSuccessCheckout }) => {
   };
 
   const infoForm = async (e) => {
+    e.preventDefault();
+
     const requiredFields = [
-      "name",
-      "surname",
-      "email",
-      "telephone",
-      "adress",
-      "postcode",
-      "province",
-      "city",
-      "country",
+      "Nombre",
+      "Apellidos",
+      "Email",
+      "Teléfono",
+      "Dirección",
+      "CódigoPostal",
+      "Provincia",
+      "Ciudad",
+      "País",
     ];
+
     const missingFields = requiredFields.filter((field) => !formData[field]);
     if (missingFields.length > 0) {
-      setErrorInfoForm(
-        "Faltan los siguientes datos: " + missingFields.join(", ")
-      );
-      missingFields.forEach((field) => {
-        const inputElement = document.getElementById(field);
-        inputElement.classList.add("required-field");
-      });
-      return;
+      setErrorInfoForm(`Faltan los siguientes datos: ${missingFields.join(", ")}`)
     } else {
-      e.preventDefault();
+      setErrorInfoForm("");
       setSuccessCheckout(true);
     }
   };
-  
+
   return (
-    <form>
+    <form  onSubmit={infoForm}>
       <div className="checkout-form-content">
-        <div className="checkout-form" onSubmit={infoForm}>
+        <div className="checkout-form">
           <fieldset>
             <label>Nombre</label>
             <input
               required
               type="text"
-              id="name"
+              id="Nombre"
               onChange={handleInputChange}
             />
           </fieldset>
@@ -105,20 +104,20 @@ export const CheckOutForm = ({ setSuccessCheckout }) => {
             <input
               required
               type="text"
-              id="surname"
+              id="Apellidos"
               onChange={handleInputChange}
             />
           </fieldset>
           <fieldset>
             <label>Nombre de Empresa (Opcional)</label>
-            <input type="text" id="company" onChange={handleInputChange} />
+            <input type="text" id="Empresa" onChange={handleInputChange} />
           </fieldset>
           <fieldset>
             <label>País</label>
             <input
               required
               type="text"
-              id="country"
+              id="País"
               onChange={handleInputChange}
             />
           </fieldset>
@@ -127,7 +126,7 @@ export const CheckOutForm = ({ setSuccessCheckout }) => {
             <input
               required
               type="text"
-              id="adress"
+              id="Dirección"
               onChange={handleInputChange}
             />
           </fieldset>
@@ -136,7 +135,7 @@ export const CheckOutForm = ({ setSuccessCheckout }) => {
             <input
               required
               type="text"
-              id="province"
+              id="Provincia"
               onChange={handleInputChange}
             />
           </fieldset>
@@ -145,7 +144,7 @@ export const CheckOutForm = ({ setSuccessCheckout }) => {
             <input
               required
               type="text"
-              id="city"
+              id="Ciudad"
               onChange={handleInputChange}
             />
           </fieldset>
@@ -154,7 +153,7 @@ export const CheckOutForm = ({ setSuccessCheckout }) => {
             <input
               required
               type="text"
-              id="postcode"
+              id="CódigoPostal"
               onChange={handleInputChange}
             />
           </fieldset>
@@ -163,7 +162,7 @@ export const CheckOutForm = ({ setSuccessCheckout }) => {
             <input
               required
               type="text"
-              id="telephone"
+              id="Teléfono"
               onChange={handleInputChange}
             />
           </fieldset>
@@ -172,16 +171,19 @@ export const CheckOutForm = ({ setSuccessCheckout }) => {
             <input
               required
               type="text"
-              id="email"
+              id="Email"
               onChange={handleInputChange}
             />
           </fieldset>
-          {errorInfoForm && <p className="error-message">{errorInfoForm}</p>}
+
+          {errorInfoForm && <p className="error-form">{errorInfoForm}</p>}
+
         </div>
         <CheckoutOrderNote />
       </div>
       <CheckOutOrderDetails />
-      <ChekoutOrderPayment infoForm={infoForm} />
+      <ChekoutOrderPayment infoForm={infoForm} setSuccessCheckout={setSuccessCheckout} formData={formData} setErrorInfoForm={setErrorInfoForm} />
+
     </form>
   );
 };
@@ -252,47 +254,95 @@ export const CheckoutOrderNote = () => {
   );
 };
 
-export const ChekoutOrderPayment = ({ infoForm }) => {
+export const ChekoutOrderPayment = ({ infoForm, setErrorInfoForm, formData }) => {
+
+  const [selectedPayment, setSelectedPayment] = useState("");
+  const [errorPayment, setErrorPayment] = useState("");
+
+  const handleDivPayment = (paymentType) => {
+    setSelectedPayment(paymentType);
+  };
+
+  const handlePayment = (e) => {
+    e.preventDefault();
+  
+    const requiredFields = [
+      "Nombre",
+      "Apellidos",
+      "Email",
+      "Teléfono",
+      "Dirección",
+      "CódigoPostal",
+      "Provincia",
+      "Ciudad",
+      "País",
+    ];
+  
+    const missingFields = requiredFields.filter((field) => !formData[field]);
+  
+    if (missingFields.length > 0 || !selectedPayment) {
+      if (missingFields.length > 0) {
+        setErrorInfoForm(`Faltan los siguientes datos: ${missingFields.join(", ")}`);
+      } else {
+        setErrorInfoForm("");
+      }
+      if (!selectedPayment) {
+        setErrorPayment("Selecciona un método de pago");
+      } else {
+        setErrorPayment("");
+      }
+    } else {
+      setErrorInfoForm("");
+      setErrorPayment("");
+      infoForm(e); 
+    }
+  };
+  
+
   return (
     <div className="checkout-order-payment">
       <div className="check-payment-type">
-        <div>
+        <div onClick={() => handleDivPayment("Transferencia")}>
           <label>
-            <input name="payment_type" type="radio" />
+            <input name="payment_type" type="radio" defaultChecked={selectedPayment === 'Transferencia'}/>
             <span>Transferencia (€1.00)</span>
           </label>
           <img src="/images/lacaixa.png" alt="py-metho-lacaixa" />
         </div>
-        <div>
+        <div onClick={() => handleDivPayment("Tarjeta")}>
           <label>
-            <input name="payment_type" type="radio" />
+            <input name="payment_type" type="radio" defaultChecked={selectedPayment === 'Tarjeta'} />
             <span>Tarjeta de crédito (€1.00)</span>
           </label>
           <img src="/images/tarjeta.png" alt="py-tarjeta" />
         </div>
-        <div>
+        <div onClick={() => handleDivPayment("Bizum")}>
           <label>
-            <input name="payment_type" type="radio" />
+            <input name="payment_type" type="radio"  defaultChecked={selectedPayment === 'Bizum'}/>
             <span>Bizum (€1.00)</span>
           </label>
           <img src="/images/bizum.png" alt="pay-bizum" />
         </div>
-        <div>
+        <div onClick={() => handleDivPayment("Paypal")}>
           <label>
-            <input name="payment_type" type="radio" />
+            <input name="payment_type" type="radio" defaultChecked={selectedPayment === 'Paypal'}/>
             <span>Paypal (€2.00)</span>
           </label>
           <img src="/images/paypal.png" alt="py-paypal" />
         </div>
       </div>
+
+      {errorPayment && <p className="error-payment">{errorPayment}</p>}
+
       <div className="check-o-btn">
-        <button type="submit" onClick={infoForm}>
+        <button type="button" onClick={handlePayment}>
           Realizar Compra
         </button>
       </div>
     </div>
   );
 };
+
 
 export const SuccesModal = ({ setSuccessCheckout }) => {
   const { clearCart } = useContext(CartContext);
@@ -324,4 +374,4 @@ export const SuccesModal = ({ setSuccessCheckout }) => {
       </div>
     </div>
   );
-};
+}
