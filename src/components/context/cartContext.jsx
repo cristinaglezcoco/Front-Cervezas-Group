@@ -1,102 +1,236 @@
+// import { createContext, useEffect, useState } from "react";
+
+// export const CartContext = createContext();
+
+// export const CartProvider = ({ children }) => {
+
+//   const cartUser = localStorage.getItem("user_id");
+//   // console.log(cartUser);
+//   const initialCart = cartUser ? JSON.parse(localStorage.getItem(`cart_${cartUser}`)) || [] : [];
+
+//   const [cart, setCart] = useState(initialCart);
+//   const [totalItems, setTotalItems] = useState(0);
+//   const [subtotal, setSubtotal] = useState(0);
+//   const [taxes, setTaxes] = useState(0);
+//   const [total, setTotal] = useState(0);
+
+//   useEffect(() => {
+//     if (cartUser) {
+//       localStorage.setItem(`cart_${cartUser}`, JSON.stringify(cart));
+//     }
+//   }, [cartUser, cart]);
+
+//   // console.log("User ID:", cartUser);
+
+//   const clearCart = () => {
+//     setCart([]);
+//     localStorage.removeItem(`cart_${cartUser}`);
+//     console.log("Cart cleared");
+//   };
+
+//   const isEmpty = () => {
+//     return cart.length === 0;
+//   };
+
+//   const findItemInCart = (id) => {
+//     return cart.find((item) => item._id === id);
+//   };
+
+//   const addToCart = (product, quantity) => {
+//     const updatedCart = cartUser ? JSON.parse(localStorage.getItem(`cart_${cartUser}`)) || [] : [];
+//     if (findItemInCart(product._id)) {
+//       increaseQuantity(product._id);
+//       return;
+//     }
+//     const newProduct = { ...product, quantity };
+//     updatedCart.push(newProduct);
+//     localStorage.setItem(`cart_${cartUser}`, JSON.stringify(updatedCart));
+//     setCart(updatedCart);
+//     // console.log(updatedCart);
+//     // console.log("Product added to cart:", newProduct);
+//   };
+
+//   const removeFromCart = (id) => {
+//     const updatedCart = cartUser ? JSON.parse(localStorage.getItem(`cart_${cartUser}`)) || [] : [];
+//     const updatedCartFiltered = updatedCart.filter((item) => item._id !== id);
+//     localStorage.setItem(`cart_${cartUser}`, JSON.stringify(updatedCartFiltered));
+//     setCart(updatedCartFiltered);
+//   };
+
+//   const increaseQuantity = (id) => {
+//     const updatedCart = cartUser ? JSON.parse(localStorage.getItem(`cart_${cartUser}`)) || [] : [];
+//     const updatedCartIncremented = updatedCart.map((item) =>
+//       item._id === id ? { ...item, quantity: item.quantity + 1 } : item
+//     );
+//     localStorage.setItem(`cart_${cartUser}`, JSON.stringify(updatedCartIncremented));
+//     setCart(updatedCartIncremented);
+//   };
+
+//   const decreaseQuantity = (id) => {
+//     const updatedCart = cartUser ? JSON.parse(localStorage.getItem(`cart_${cartUser}`)) || [] : [];
+//     const updatedCartDecremented = updatedCart.map((item) =>
+//       item._id === id ? { ...item, quantity: item.quantity - 1 } : item
+//     );
+//     localStorage.setItem(`cart_${cartUser}`, JSON.stringify(updatedCartDecremented));
+//     setCart(updatedCartDecremented);
+//   };
+
+//   useEffect(() => {
+//     const countTotalItems = () => {
+//       return cart.reduce((acc, item) => acc + item.quantity, 0);
+//     };
+//     setTotalItems(countTotalItems());
+
+//     const countSubtotal = () => {
+//       return cart.reduce(
+//         (acc, item) => acc + item.precio * item.quantity,
+//         0
+//       );
+//     };
+//     setSubtotal(countSubtotal());
+//   }, [cart]);
+
+//   useEffect(() => {
+//     const countTaxes = () => {
+//       return subtotal * 0.1;
+//     };
+//     setTaxes(countTaxes());
+//   }, [subtotal]);
+
+//   useEffect(() => {
+//     const countTotal = () => {
+//       return subtotal + taxes;
+//     };
+//     setTotal(countTotal());
+//   }, [subtotal, taxes]);
+
+//   return (
+//     <CartContext.Provider
+//       value={{
+//         cart,
+//         addToCart,
+//         removeFromCart,
+//         increaseQuantity,
+//         decreaseQuantity,
+//         clearCart,
+//         totalItems,
+//         isEmpty,
+//         subtotal,
+//         taxes,
+//         total,
+//       }}
+//     >
+//       {children}
+//     </CartContext.Provider>
+//   );
+// };
+
+
 import { createContext, useEffect, useState } from "react";
 
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-  const [cart, setCart] = useState([]); // Estado para almacenar los elementos del carrito
-  const [totalItems, setTotalItems] = useState(0); // Estado para almacenar el total de elementos en el carrito
-  const [subtotal, setSubtotal] = useState(0); // Estado para almacenar el subtotal del carrito
-  const [taxes, setTaxes] = useState(0); // Estado para almacenar los impuestos del carrito
-  const [total, setTotal] = useState(0); // Estado para almacenar el total del carrito
+  
+  const [cart, setCart] = useState([]);
+  const [totalItems, setTotalItems] = useState(0);
+  const [subtotal, setSubtotal] = useState(0);
+  const [taxes, setTaxes] = useState(0);
+  const [total, setTotal] = useState(0);
+
+  useEffect(() => {
+    const userId = localStorage.getItem("user_id");
+    if (userId) {
+      const storedCart = localStorage.getItem(`cart_${userId}`);
+      if (storedCart) {
+        setCart(JSON.parse(storedCart));
+      }
+    }
+  }, []);
+
+  const saveCartToLocalStorage = (cartData) => {
+    const userId = localStorage.getItem("user_id");
+    if (userId) {
+      localStorage.setItem(`cart_${userId}`, JSON.stringify(cartData));
+    }
+  };
 
   const clearCart = () => {
     setCart([]);
-  };
-  // Verifica si el carrito está vacío
-  const isEmpty = () => {
-    if (cart.length === 0) {
-      return true;
-    }
-    return false;
+    saveCartToLocalStorage([]);
   };
 
-  // Busca un elemento en el carrito por su id
+  const isEmpty = () => {
+    return cart.length === 0;
+  };
+
   const findItemInCart = (id) => {
     return cart.find((item) => item._id === id);
   };
 
-  // Agrega un producto al carrito
   const addToCart = (product, quantity) => {
-    if (findItemInCart(product._id)) {
-      increaseQuantity(product._id);
-      return;
+    const existingItem = findItemInCart(product._id);
+    if (existingItem) {
+      increaseQuantity(existingItem._id);
+    } else {
+      const newProduct = { ...product, quantity };
+      setCart([...cart, newProduct]);
+      saveCartToLocalStorage([...cart, newProduct]);
     }
-    const newProduct = { ...product, quantity };
-    setCart((prevCart) => [...prevCart, newProduct]);
   };
 
-  // Remueve un producto del carrito por su id
   const removeFromCart = (id) => {
-    setCart((prevCart) => prevCart.filter((item) => item._id !== id));
+    const updatedCart = cart.filter((item) => item._id !== id);
+    setCart(updatedCart);
+    saveCartToLocalStorage(updatedCart);
   };
 
-  // Incrementa la cantidad de un producto en el carrito por su id
   const increaseQuantity = (id) => {
-    setCart((prevCart) =>
-      prevCart.map((item) =>
-        item._id === id ? { ...item, quantity: item.quantity + 1 } : item
-      )
+    const updatedCart = cart.map((item) =>
+      item._id === id ? { ...item, quantity: item.quantity + 1 } : item
     );
+    setCart(updatedCart);
+    saveCartToLocalStorage(updatedCart);
   };
 
-  // Decrementa la cantidad de un producto en el carrito por su id
   const decreaseQuantity = (id) => {
-    if (findItemInCart(id).quantity === 1) {
+    const existingItem = findItemInCart(id);
+    if (existingItem.quantity === 1) {
       removeFromCart(id);
-      return;
-    }
-    setCart((prevCart) =>
-      prevCart.map((item) =>
+    } else {
+      const updatedCart = cart.map((item) =>
         item._id === id ? { ...item, quantity: item.quantity - 1 } : item
-      )
-    );
+      );
+      setCart(updatedCart);
+      saveCartToLocalStorage(updatedCart);
+    }
   };
 
-  // Actualiza el total de elementos en el carrito cuando cambia el carrito
   useEffect(() => {
     const countTotalItems = () => {
       return cart.reduce((acc, item) => acc + item.quantity, 0);
     };
     setTotalItems(countTotalItems());
 
-    // Actualiza el subtotal cada vez que cambia el carrito
     const countSubtotal = () => {
       return cart.reduce(
-        (acc, item) => acc + (item.precio.toFixed(2)) * item.quantity,
+        (acc, item) => acc + item.precio * item.quantity,
         0
       );
     };
     setSubtotal(countSubtotal());
-  }, [cart]);
 
-  useEffect(() => {
-    //para calcular los impuestos cuando cambie el subtotal.
     const countTaxes = () => {
       return subtotal * 0.1;
     };
     setTaxes(countTaxes());
-  }, [subtotal]);
 
-  useEffect(() => {
-    //para calcular el total cuando cambie el subtotal o los impuestos.
     const countTotal = () => {
       return subtotal + taxes;
     };
+    setTotal(countTotal());
+  }, [cart, subtotal, taxes]);
 
-    setTotal(countTotal()); //actualiza el total
-  }, [subtotal, taxes]);
-
-  //retorna el provider con los valores y funciones necesarios
   return (
     <CartContext.Provider
       value={{
@@ -117,3 +251,4 @@ export const CartProvider = ({ children }) => {
     </CartContext.Provider>
   );
 };
+
