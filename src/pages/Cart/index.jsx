@@ -12,7 +12,7 @@ function Cart() {
   const { isEmpty } = useContext(CartContext);
   return (
     <>
-      <NavBarHeader title="Cart" />
+      <NavBarHeader title="Carrito" />
 
       <Container>
         {isEmpty() ? (
@@ -33,6 +33,7 @@ export default Cart;
 
 export const CartList = () => {
   const { cart } = useContext(CartContext);
+  
   return (
     <div className="cart-list">
       <div className="cart-list-header">
@@ -105,7 +106,30 @@ export const CartItem = ({ item }) => {
 };
 
 export const CartSubtotal = () => {
-  const { subtotal, taxes, total } = useContext(CartContext);
+
+  const cartContext = useContext(CartContext);
+  const { subtotal, taxes, total } = cartContext;
+
+  const handleLogout = () => {
+
+    const userId = localStorage.getItem("user_id");
+
+    if (userId) {
+      const cartItems = cartContext.cart;
+      localStorage.setItem(`cart_${userId}`, JSON.stringify(cartItems));
+
+    }
+  
+    localStorage.removeItem("token");
+    localStorage.removeItem("user_id");
+    localStorage.removeItem("user");
+
+    setTimeout(() => {
+      window.location.href = "/";
+    }, 100); 
+  };
+
+
   return (
     <div className="cart-subtotal">
       <div>
@@ -121,11 +145,21 @@ export const CartSubtotal = () => {
           <strong>€ {total.toFixed(2)}</strong>
         </span>
       </div>
-      <div>
+
+      {/* <div>
         <Link className="checkout-btn" to="/checkout">
           <span>Checkout</span>
         </Link>
+      </div> */}
+
+      <div>
+        <button className="checkout-btn"><Link to="/checkout">Checkout</Link></button>
       </div>
+
+      <div>
+        <button type="button" onClick={handleLogout} className="checkout-btn">Log Out</button>
+      </div>
+
     </div>
   );
 };

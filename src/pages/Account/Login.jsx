@@ -7,6 +7,8 @@ import { UserContext } from "../../components/context/userContext";
 function Login() {
 
   const userLoginContext = useContext(UserContext);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [visiblePassword, setVisiblePassword] = useState(false);
 
   const navigate = useNavigate();
 
@@ -14,8 +16,6 @@ function Login() {
     email: "",
     password: "",
   });
-
-  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -63,6 +63,13 @@ function Login() {
     }
   }
 
+  const handleVisibilityPassword = () => {
+      setVisiblePassword(!visiblePassword);
+  }
+
+  const passwordImage = visiblePassword ? "/images/password-abierta.png" : "/images/password.png";
+
+
   return (
     <>
     
@@ -75,7 +82,8 @@ function Login() {
         </div>
         <div className="form-info">
           <label>Password</label>
-          <input onChange={handleInput} type="password" id="password" />
+          <input onChange={handleInput} type={visiblePassword ? "text" : "password"} id="password" />
+          <img src={passwordImage} onClick={handleVisibilityPassword} />
         </div>
 
         {errorMessage && <div className="login-error">{errorMessage}</div>}
