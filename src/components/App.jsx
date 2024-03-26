@@ -1,4 +1,3 @@
-// import Home from "./Home";
 import { Route, Routes } from "react-router-dom";
 import Register from "../pages/Account/Register";
 import Home from "../pages/Home";
@@ -17,7 +16,6 @@ import {
 import ProductInfo from "../pages/ProductInfo";
 import { CartProvider } from "./context/cartContext";
 import AuthRoute from "./AuthRoute/AuthRoute";
-import Login from "../pages/Account/Login";
 
 function App() {
   const saveUser = useUsersContext();

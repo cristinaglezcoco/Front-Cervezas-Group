@@ -3,76 +3,86 @@ import { createContext, useEffect, useState } from "react";
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-  const [cart, setCart] = useState([]); // Estado para almacenar los elementos del carrito
-  const [totalItems, setTotalItems] = useState(0); // Estado para almacenar el total de elementos en el carrito
-  const [subtotal, setSubtotal] = useState(0); // Estado para almacenar el subtotal del carrito
-  const [taxes, setTaxes] = useState(0); // Estado para almacenar los impuestos del carrito
-  const [total, setTotal] = useState(0); // Estado para almacenar el total del carrito
+
+  const userId = localStorage.getItem("user_id");
+
+  const [cart, setCart] = useState([]);
+  const [totalItems, setTotalItems] = useState(0);
+  const [subtotal, setSubtotal] = useState(0);
+  const [taxes, setTaxes] = useState(0);
+  const [total, setTotal] = useState(0);
+
+  useEffect(() => {
+    const storedCart = userId ? JSON.parse(localStorage.getItem(`cart_${userId}`)) || [] : [];
+    setCart(storedCart);
+    console.log(storedCart);
+  }, [userId]);
 
   const clearCart = () => {
     setCart([]);
-  };
-  // Verifica si el carrito está vacío
-  const isEmpty = () => {
-    if (cart.length === 0) {
-      return true;
-    }
-    return false;
+    localStorage.removeItem(`cart_${userId}`);
+    console.log("Cart cleared");
   };
 
-  // Busca un elemento en el carrito por su id
+  const isEmpty = () => {
+    return cart.length === 0;
+  };
+
   const findItemInCart = (id) => {
     return cart.find((item) => item._id === id);
   };
 
-  // Agrega un producto al carrito
   const addToCart = (product, quantity) => {
-    if (findItemInCart(product._id)) {
-      increaseQuantity(product._id);
-      return;
+    const updatedCart = [...cart]; // Copiamos el carrito actual
+    const existingItem = findItemInCart(product._id);
+    if (existingItem) {
+      // Si el producto ya está en el carrito, actualizamos la cantidad
+      existingItem.quantity += quantity;
+    } else {
+      // Si el producto no está en el carrito, lo añadimos
+      updatedCart.push({ ...product, quantity });
     }
-    const newProduct = { ...product, quantity };
-    setCart((prevCart) => [...prevCart, newProduct]);
+    // Actualizamos el estado del carrito y el almacenamiento local
+    setCart(updatedCart);
+    localStorage.setItem(`cart_${userId}`, JSON.stringify(updatedCart));
   };
-
-  // Remueve un producto del carrito por su id
+  
   const removeFromCart = (id) => {
-    setCart((prevCart) => prevCart.filter((item) => item._id !== id));
+    const updatedCart = cart.filter((item) => item._id !== id); // Filtramos el producto a eliminar
+    // Actualizamos el estado del carrito y el almacenamiento local
+    setCart(updatedCart);
+    localStorage.setItem(`cart_${userId}`, JSON.stringify(updatedCart));
   };
+  
 
-  // Incrementa la cantidad de un producto en el carrito por su id
+
   const increaseQuantity = (id) => {
-    setCart((prevCart) =>
-      prevCart.map((item) =>
-        item._id === id ? { ...item, quantity: item.quantity + 1 } : item
-      )
+    const updatedCartIncremented = cart.map((item) =>
+      item._id === id ? { ...item, quantity: item.quantity + 1 } : item
     );
+    localStorage.setItem(`cart_${userId}`, JSON.stringify(updatedCartIncremented));
+    setCart(updatedCartIncremented);
   };
 
-  // Decrementa la cantidad de un producto en el carrito por su id
+
   const decreaseQuantity = (id) => {
-    if (findItemInCart(id).quantity === 1) {
-      removeFromCart(id);
-      return;
-    }
-    setCart((prevCart) =>
-      prevCart.map((item) =>
-        item._id === id ? { ...item, quantity: item.quantity - 1 } : item
-      )
+    const updatedCart = cart.map((item) =>
+      item._id === id ? { ...item, quantity: Math.max(1, item.quantity - 1) } : item
     );
+    // Actualizamos el estado del carrito y el almacenamiento local
+    setCart(updatedCart);
+    localStorage.setItem(`cart_${userId}`, JSON.stringify(updatedCart));
   };
-
-  // Actualiza el total de elementos en el carrito cuando cambia el carrito
+  
   useEffect(() => {
     const countTotalItems = () => {
       return cart.reduce((acc, item) => acc + item.quantity, 0);
     };
     setTotalItems(countTotalItems());
 
-    // Actualiza el subtotal cada vez que cambia el carrito
     const countSubtotal = () => {
       return cart.reduce(
-        (acc, item) => acc + (item.precio.toFixed(2)) * item.quantity,
+        (acc, item) => acc + item.precio * item.quantity,
         0
       );
     };
@@ -80,7 +90,6 @@ export const CartProvider = ({ children }) => {
   }, [cart]);
 
   useEffect(() => {
-    //para calcular los impuestos cuando cambie el subtotal.
     const countTaxes = () => {
       return subtotal * 0.1;
     };
@@ -88,15 +97,12 @@ export const CartProvider = ({ children }) => {
   }, [subtotal]);
 
   useEffect(() => {
-    //para calcular el total cuando cambie el subtotal o los impuestos.
     const countTotal = () => {
       return subtotal + taxes;
     };
-
-    setTotal(countTotal()); //actualiza el total
+    setTotal(countTotal());
   }, [subtotal, taxes]);
 
-  //retorna el provider con los valores y funciones necesarios
   return (
     <CartContext.Provider
       value={{
