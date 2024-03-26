@@ -6,7 +6,7 @@ import Container from "../../components/shared/Container";
 import { FaTimes } from "react-icons/fa";
 import { useContext } from "react";
 import { CartContext } from "../../components/context/cartContext";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Cart() {
   const { isEmpty } = useContext(CartContext);
