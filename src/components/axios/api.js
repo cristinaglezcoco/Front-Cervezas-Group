@@ -17,5 +17,3 @@ export const API = axios.create({
   baseURL: "http://localhost:5001",
 });
 
-export const getCervezas = () => API.get("/cervezas");
-export const getCerveza = (id) => API.get(`/cervezas/${id}`);

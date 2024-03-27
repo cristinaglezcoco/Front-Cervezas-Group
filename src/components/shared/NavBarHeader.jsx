@@ -5,11 +5,13 @@ import { FaAngleRight } from "react-icons/fa";
 import { useContext, useEffect, useState } from "react";
 import Container from "./Container";
 import { CartContext } from "../context/cartContext";
+import { IoLogOut } from "react-icons/io5";
 
 function NavBarHeader({ title }) {
 
   const [active, setActive] = useState(false);
   const { totalItems } = useContext(CartContext);
+  const [isLogged ,setIsLogged] = useState(false);
   const handleNav = (active) => setActive(active);
 
   const path = window.location.pathname;
@@ -24,6 +26,39 @@ function NavBarHeader({ title }) {
       });
     };
     useEffect (() => scrollToTop(), [path]);
+    
+    const cartContext = useContext(CartContext);
+
+  const handleLogout = () => {
+    
+
+    const userId = localStorage.getItem("user_id");
+
+    if (userId) {
+      const cartItems = cartContext.cart;
+      localStorage.setItem(`cart_${userId}`, JSON.stringify(cartItems));
+
+    }
+  
+  
+
+    localStorage.removeItem("token");
+    localStorage.removeItem("user_id");
+    localStorage.removeItem("user");
+    window.location.href = "/";
+  }
+
+      
+      useEffect(() => {
+        if(localStorage.getItem("token")){
+          setIsLogged(true);
+        }
+
+      },[]
+      );
+
+      useEffect (() => scrollToTop(), []);
+  
 
   return (
     <>
@@ -80,6 +115,13 @@ function NavBarHeader({ title }) {
                   <FaUser />
                 </Link>
               </li>
+              {
+              isLogged ?
+              <li className="logout-icons" onClick={handleLogout}>
+                  <IoLogOut />
+              </li>
+              :
+              null }
               <li>
                 <div className="cart-navbar">
                   <Link to="/cart">
@@ -121,6 +163,38 @@ export default NavBarHeader;
 
 export function NavBarMobile({ active, handleNav }) {
   const { totalItems } = useContext(CartContext);
+  const [isLogged ,setIsLogged] = useState(false);
+
+  const cartContext = useContext(CartContext);
+
+  const handleLogout = () => {
+    
+
+    const userId = localStorage.getItem("user_id");
+
+    if (userId) {
+      const cartItems = cartContext.cart;
+      localStorage.setItem(`cart_${userId}`, JSON.stringify(cartItems));
+
+    }
+  
+  
+
+    localStorage.removeItem("token");
+    localStorage.removeItem("user_id");
+    localStorage.removeItem("user");
+    window.location.href = "/";
+  }
+
+      
+      useEffect(() => {
+        if(localStorage.getItem("token")){
+          setIsLogged(true);
+        }
+
+      },[]
+      );
+
   return (
     <div className={"mb-nav " + (active ? "active" : "")}>
       <div className="mb-nav-top">
@@ -172,6 +246,13 @@ export function NavBarMobile({ active, handleNav }) {
         <Link to={"/account"}>
           <FaUser />
         </Link>
+        {
+        isLogged ?
+        <Link className="logout-icons" to="/" onClick={handleLogout}>
+            <IoLogOut />
+        </Link>
+        :
+        null }
       </div>
     </div>
   );

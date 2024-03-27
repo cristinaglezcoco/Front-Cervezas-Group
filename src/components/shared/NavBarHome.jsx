@@ -3,12 +3,16 @@ import { FaFacebook, FaInstagram, FaShoppingBag, FaUser } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { NavBarMobile } from "../../components/shared/NavBarHeader";
 import { useContext, useEffect, useState } from "react";
-import { CartContext } from "../../components/context/cartContext";
+import { CartContext } from "../context/cartContext";
+import { IoLogOut } from "react-icons/io5";
 
 export default function NavBarHome() {
   const [active, setActive] = useState(false);
   const handleNav = (active) => setActive(active);
   const { totalItems } = useContext(CartContext);
+  
+  const [isLogged ,setIsLogged] = useState(false);
+
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -16,7 +20,42 @@ export default function NavBarHome() {
       behavior: 'smooth'
     });
   };
-  useEffect (() => scrollToTop(), []);
+  
+  
+  const cartContext = useContext(CartContext);
+
+  const handleLogout = () => {
+    
+
+    const userId = localStorage.getItem("user_id");
+
+    if (userId) {
+      const cartItems = cartContext.cart;
+      localStorage.setItem(`cart_${userId}`, JSON.stringify(cartItems));
+
+    }
+  
+  
+
+    localStorage.removeItem("token");
+    localStorage.removeItem("user_id");
+    localStorage.removeItem("user");
+    window.location.href = "/";
+  }
+
+      
+      useEffect(() => {
+        if(localStorage.getItem("token")){
+          setIsLogged(true);
+        }
+
+      },[]
+      );
+
+      useEffect (() => scrollToTop(), []);
+
+    
+  
 
 
   return (
@@ -50,6 +89,14 @@ export default function NavBarHome() {
               <FaUser />
             </Link>
           </li>
+          {
+          isLogged ?
+          <li className="logout-icons" onClick={handleLogout} > 
+            <IoLogOut />
+          </li>
+          :
+          null
+          }
           <li>
             <div className="cart-navbar">
               <Link to="/cart">

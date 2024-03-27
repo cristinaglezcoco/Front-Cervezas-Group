@@ -6,7 +6,7 @@ import Container from "../../components/shared/Container";
 import { FaTimes } from "react-icons/fa";
 import { useContext } from "react";
 import { CartContext } from "../../components/context/cartContext";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Cart() {
   const { isEmpty } = useContext(CartContext);
@@ -110,24 +110,7 @@ export const CartSubtotal = () => {
   const cartContext = useContext(CartContext);
   const { subtotal, taxes, total } = cartContext;
 
-  const handleLogout = () => {
-
-    const userId = localStorage.getItem("user_id");
-
-    if (userId) {
-      const cartItems = cartContext.cart;
-      localStorage.setItem(`cart_${userId}`, JSON.stringify(cartItems));
-
-    }
-  
-    localStorage.removeItem("token");
-    localStorage.removeItem("user_id");
-    localStorage.removeItem("user");
-
-    setTimeout(() => {
-      window.location.href = "/";
-    }, 100); 
-  };
+ 
 
 
   return (
@@ -146,19 +129,13 @@ export const CartSubtotal = () => {
         </span>
       </div>
 
-      {/* <div>
+      <div>
         <Link className="checkout-btn" to="/checkout">
           <span>Checkout</span>
         </Link>
-      </div> */}
-
-      <div>
-        <button className="checkout-btn"><Link to="/checkout">Checkout</Link></button>
       </div>
 
-      <div>
-        <button type="button" onClick={handleLogout} className="checkout-btn">Log Out</button>
-      </div>
+      
 
     </div>
   );
