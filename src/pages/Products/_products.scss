@@ -1,3 +1,14 @@
+
+        
+.hs-carousel-1 >p {
+    font-weight: bold;
+    font-size: 20px;
+    >span {
+        color: var(--naranja);
+    }
+}
+
+
 .products-list {
     padding-top: 100px;
     display: grid;
