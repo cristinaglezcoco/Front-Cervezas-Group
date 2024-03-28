@@ -150,7 +150,12 @@ function NavBarHeader({ title }) {
           <div className="h-content-div">
             <span>{title}</span>
             <p className="h-content-text">
-              <Link to="/">Home</Link> / {title}
+              {title === "Carrito" ? (
+                <Link to="/products">Productos</Link>
+              ) : (
+                <Link to="/">Home</Link>
+              )}
+              / {title}
             </p>
           </div>
         </Container>

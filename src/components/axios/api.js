@@ -3,7 +3,7 @@ import axios from "axios";
 const APIHeader = {
   Accept: "application/json",
   "Content-type": "application/json",
-  "Acces-Control-Allow-Origin": "", // acepta todo
+  "Access-Control-Allow-Origin": "", // acepta todo
   Authorization: {
     toString() {
       return `Bearer ${localStorage.getItem("token")}`;

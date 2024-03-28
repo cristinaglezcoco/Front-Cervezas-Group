@@ -21,7 +21,7 @@ function Products() {
           </div>
           <h1>Descubre Nuestra Cervezas</h1>
           <p>
-            Explora un mundo de sabor con nuestras cervezas artesanales únicas.
+            Explora un mundo de sabor con <span>nuestras cervezas artesanales únicas</span>.
             Descubre la pasión y la calidad en cada sorbo, disponible ahora para
             tu disfrute.
           </p>
