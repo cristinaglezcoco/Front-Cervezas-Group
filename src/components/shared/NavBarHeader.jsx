@@ -150,7 +150,7 @@ function NavBarHeader({ title }) {
           <div className="h-content-div">
             <span>{title}</span>
             <p className="h-content-text">
-              {title === "Carrito" ? (
+              {title === "Carrito" || title === "Colmo Teita - Rye Lager" || title === "Colmo Ancares DH Rye IPA" || title === "Colmo Mallega - Hazy Session Rye IPA" ? (
                 <Link to="/products">Productos</Link>
               ) : (
                 <Link to="/">Home</Link>
