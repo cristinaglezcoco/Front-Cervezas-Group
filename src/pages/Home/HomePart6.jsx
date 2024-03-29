@@ -12,7 +12,7 @@ function HomePart6() {
             </div>
             <p>Conoce nuestro proceso de investigacion</p>
             <a
-              href="https://www.youtube.com/watch?v=a1CSYfv3bRk&t=68s"
+              href="https://www.youtube.com/watch?v=a1CSYfv3bRk"
               rel="noreferrer"
               target="_blank"
               className="hvs-video-play-btn"

@@ -8,7 +8,7 @@ function HomePart3() {
           <div className="hs3-1">
             <h2>
               «Proyecto que nace, para{" "}
-              <span className="text-warning">promover el cultivo del centeno y toda la cultura que le rodea,</span> ,
+              <span className="text-warning">promover el cultivo del centeno y toda la cultura que le rodea, </span> 
               colaborando en la recuperación de tejados de teito y otras artes relacionadas con este cereal.»
             </h2>
           </div>

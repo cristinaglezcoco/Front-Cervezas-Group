@@ -29,7 +29,7 @@ function HomePart5() {
           </div>
           <h1>Descubre Nuestra Cervezas</h1>
           <p>
-            Explora un mundo de sabor con nuestras cervezas artesanales únicas. Descubre la pasión y la calidad en cada sorbo, disponible ahora para tu disfrute.
+            Explora un mundo de sabor <span>con nuestras cervezas artesanales únicas. </span> Descubre la pasión y la calidad en cada sorbo, disponible ahora para tu disfrute.
           </p>
         </div>
         <div className={"h-carousel_container"}> {/*onMouseDown={handlerMOuseDown}*/}
@@ -62,9 +62,9 @@ function CarouselItem({ cerveza }) {
   return (
     <div className={"h-carousel_item"}>
       <div className="h-car-item-cont">
-        <div className="h-car-item-cont-img">
+        <Link to = {"/product/"+ cerveza._id} className="h-car-item-cont-img">
           <img src={cerveza.picture} alt="image 1" />
-        </div>
+        </Link>
         <div className="h-car-item-desc">
           <h4>{cerveza.nombre}</h4>
           <p>
