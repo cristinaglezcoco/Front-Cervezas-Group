@@ -27,7 +27,7 @@ function Products() {
           </p>
         </div>
         <ProductsList />
-        {/* <ProductsPagination /> */}
+        <ProductsPagination />
       </Container>
       <Footer />
     </>
@@ -69,16 +69,16 @@ export const ProductItem = ({ producto }) => {
   );
 };
 
-// export const ProductsPagination = () => {
-//   return (
-//     <div className="products-pagination">
-//       <div>
-//         <button className="active">1</button>
-//         <button>2</button>
-//       </div>
-//       <button>
-//         <img src="/images/icon-arrow-product-04.png" alt="arrow icon" />
-//       </button>
-//     </div>
-//   );
-// };
+export const ProductsPagination = () => {
+  return (
+    <div className="products-pagination">
+      <div>
+        <button className="active">1</button>
+        <button>2</button>
+      </div>
+      <button>
+        <img src="/images/icon-arrow-product-04.png" alt="arrow icon" />
+      </button>
+    </div>
+  );
+};

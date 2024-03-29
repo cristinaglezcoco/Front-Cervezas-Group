@@ -98,7 +98,7 @@ export const CartItem = ({ item }) => {
       <div className="cart-item-total">
         <span>Total: </span>
         <span>
-          € {((item.precio.toFixed(2)) * item.quantity).toFixed(2) ?? "0.00"}
+          € {(item.precio * item.quantity).toFixed(2) ?? "0.00"}
         </span>
       </div>
     </div>
