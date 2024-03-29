@@ -27,7 +27,7 @@ function HomePart5() {
             <img src="/images/icon-detalle_6.png" alt="" />
             <img src="/images/icon-detalle_5.png" alt="" />
           </div>
-          <h1>Descubre Nuestra Cervezas</h1>
+          <h1>Descubre Nuestras Cervezas</h1>
           <p>
             Explora un mundo de sabor <span>con nuestras cervezas artesanales únicas. </span> Descubre la pasión y la calidad en cada sorbo, disponible ahora para tu disfrute.
           </p>
@@ -68,7 +68,7 @@ function CarouselItem({ cerveza }) {
         <div className="h-car-item-desc">
           <h4>{cerveza.nombre}</h4>
           <p>
-            {cerveza.graduacion} | {cerveza.fermentacion} | {cerveza.color}
+            {cerveza.graduacion}% | {cerveza.fermentacion} | {cerveza.color}
           </p>
         </div>
       </div>

@@ -65,7 +65,7 @@ export const Product = ({ product }) => {
     ""
   );
   const description =
-    product.graduacion + " | " + product.fermentacion + " | " + product.color;
+    product.graduacion + "% | " + product.fermentacion + " | " + product.color;
 
   const handleIncrement = () => {
     setQuantity(quantity + 1);
@@ -96,6 +96,9 @@ export const Product = ({ product }) => {
           {/* ingredientes  */}
           <li>
             <span>Envase: </span> <span>{envase}</span>
+          </li>
+          <li>
+            <span>Cantidad </span> <span>{product.cantidad.join(" - ")}</span>
           </li>
           <li>
             <span>Cerales: </span> <span>{cereales}</span>

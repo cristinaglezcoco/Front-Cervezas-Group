@@ -235,7 +235,7 @@ export const CheckOutOrderDetails = () => {
             </div>
             <div>
               <span>
-                <strong> {total.toFixed(2)} €</strong>
+                <strong> {total} €</strong>
               </span>
             </div>
           </div>
