@@ -60,7 +60,7 @@ export const ProductItem = ({ producto }) => {
       <div className="product-item-info">
         <h3>{producto.nombre}</h3>
         <p>
-          {producto.graduacion} | {producto.fermentacion} | {producto.color}
+          {producto.graduacion}% | {producto.fermentacion} | {producto.color}
         </p>
         <p>Precio: {producto.precio.toFixed(2)} €</p>
         <button onClick={handleAddToCart}>Añadir al carrito</button>
