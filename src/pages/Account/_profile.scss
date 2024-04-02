@@ -16,6 +16,11 @@
         padding: 30px;
         margin: 50px 0;
         border: 3px solid lightgray;
+
+        >h2 {
+            font-family: "Mulish";
+            font-size: 25px;
+        }
     
         .form-info{
             width: 100%;
@@ -37,7 +42,7 @@
 
                 font-family: "Mulish";
             }
-
+            
             >img {
                 width: 35px;
                 height: auto;
@@ -46,6 +51,8 @@
                 right: 15px;
  
             }
+
+
         }
     
         .register-btn {
@@ -55,8 +62,9 @@
             outline: none;
             padding: 15px;
             border-radius: 30px;
-            width: 150px;
+            width: 180px;
             margin-top: 15px;
+
     
             cursor: pointer;
     
@@ -74,3 +82,4 @@
         }
     }
 }
+

@@ -21,6 +21,7 @@
             width: 100%;
             display: flex;
             flex-direction: column;
+            position: relative;
 
             >label {
 
@@ -35,6 +36,15 @@
                 border: 2px solid lightgray;
 
                 font-family: "Mulish";
+            }
+
+            >img {
+                width: 40px;
+                height: auto;
+                position: absolute;
+                top: 60px;
+                right: 15px;
+ 
             }
         }
 

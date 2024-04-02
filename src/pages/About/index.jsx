@@ -1,9 +1,9 @@
 import NavBarHeader from "../../components/shared/NavBarHeader";
 import Footer from "../../components/shared/Footer";
-import VideoSection from "../Home/VideoSection";
-import ProductProcessItem from "../Home/ProductProcessItem";
+import HomePart6 from "../Home/HomePart6";
 import "./_about.scss";
 import Container from "../../components/shared/Container";
+import { ProductProcessItem } from "../Home/HomePart3";
 
 function About() {
   return (
@@ -65,7 +65,7 @@ function About() {
         </section>
         <div className="about-space"></div>
       </Container>
-      <VideoSection />
+      <HomePart6 />
 
       <Footer />
     </>

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Container from "../../components/shared/Container";
 
 function HomePart4() {
@@ -18,7 +19,7 @@ function HomePart4() {
             «En Cervezas Colmo tenemos muy marcado nuestro objetivo,<span className=""> fabricar cervezas de gran calidad,</span> que reflejen la pureza y belleza de nuestro entorno.»
           </div>
           {/* // PONER LINK */}
-          <a href="#" target="_blank"> <button type="button" className="hs4-button"> Quienes somos </button></a>
+         <Link className="hs4-button" to = "/about" >Quienes Somos</Link>
         </div>
       </Container>
     </div>

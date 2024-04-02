@@ -1,6 +1,6 @@
 import Container from "../../components/shared/Container";
 import { MdOutlinePlayCircle } from "react-icons/md";
-function VideoSection() {
+function HomePart6() {
   return (
     <div className={"hvs"}>
       <Container>
@@ -12,7 +12,7 @@ function VideoSection() {
             </div>
             <p>Conoce nuestro proceso de investigacion</p>
             <a
-              href="https://www.youtube.com/watch?v=a1CSYfv3bRk&t=68s"
+              href="https://www.youtube.com/watch?v=a1CSYfv3bRk"
               rel="noreferrer"
               target="_blank"
               className="hvs-video-play-btn"
@@ -44,4 +44,4 @@ function VideoSection() {
   );
 }
 
-export default VideoSection;
+export default HomePart6;

@@ -1,0 +1,275 @@
+.cart-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .cart-content {
+    padding: 100px 10px;
+  }
+  .cart-list-header {
+    display: none;
+  }
+  .cart-item {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #888;
+    font-family: "Mulish";
+    padding: 10px;
+    width: 100%;
+    gap: 10px;
+    & .cart-item-q-box {
+      display: flex;
+      align-items: center;
+      border: 1px solid #999;
+      padding: 1px 5px;
+      gap: 50px;
+      font-weight: normal !important;
+      & > div {
+        gap: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        & > button {
+          background-color: #fff;
+          cursor: pointer;
+          font-size: 16px;
+          color: #333;
+          &:hover {
+            color: #000;
+          }
+          border: none;
+        }
+      }
+    }
+  
+    & > div > *:last-child {
+      font-weight: bold;
+    }
+    & > div {
+      &:first-child {
+        display: flex;
+        & > *:last-child {
+          display: flex;
+          justify-content: space-between;
+          & > *:first-child {
+            font-weight: normal;
+          }
+        }
+        flex-direction: column;
+        align-items: stretch;
+        & .cart-item-remove {
+          display: flex;
+          justify-content: flex-end;
+          > button {
+            cursor: pointer;
+            color: red;
+            background-color: #fff;
+            border: none;
+            font-size: 15px;
+          }
+        }
+      }
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    & img {
+      display: none;
+    }
+  }
+  
+  @media (min-width: 900px) {
+    .cart-list {
+      gap: 0;
+    }
+    .cart-list-header {
+      display: flex;
+      width: 100%;
+      border-top: 1px solid #ddd;
+      border-left: 1px solid #ddd;
+      border-right: 1px solid #ddd;
+      & > * {
+        &:first-child {
+          flex: 2;
+          border-left: none;
+        }
+        background-color: #000;
+        color: #fff;
+        font-weight: bold;
+        padding: 10px 0;
+        font-family: "Mulish";
+        flex: 1;
+        border-left: 1px solid #ddd;
+        text-align: center;
+      }
+    }
+    .cart-item {
+      flex-direction: row;
+      max-height: 300px;
+      min-height: 150px;
+      position: relative;
+      padding: 0;
+      gap: 0;
+      border: none;
+      border-top: 1px solid #ddd;
+      &:last-child {
+        border-bottom: 1px solid #ddd;
+      }
+      & > div {
+        border-left: 1px solid #ddd;
+        justify-content: center;
+        &:last-child {
+          border-right: 1px solid #ddd;
+        }
+        flex: 1;
+        & > *:first-child {
+          display: none;
+        }
+        &:first-child {
+          flex-direction: row;
+          align-items: stretch;
+          flex: 2;
+          & > * {
+            border-left: 1px solid #ddd;
+            &:first-child {
+              border-left: none;
+            }
+          }
+          & > *:first-child {
+            flex: 0.5;
+            display: grid;
+            place-content: center;
+          }
+          & > *:nth-child(2) {
+            flex: 1;
+          }
+          & > *:last-child {
+            display: flex;
+            align-items: center;
+            padding-left: 10px;
+            flex: 2;
+            & > *:first-child {
+              display: none;
+            }
+          }
+        }
+      }
+      & .cart-item-image {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        width: 100%;
+        position: relative;
+      }
+      & img {
+        position: absolute;
+        display: block;
+        height: 100%;
+        width: 100%;
+        object-fit: contain;
+      }
+    }
+  }
+  
+  @media (min-width: 1025px) {
+    .cart-content {
+      width: 90%;
+      margin: auto;
+    }
+  }
+  
+  .cart-subtotal {
+    display: flex;
+    flex-direction: column;
+    font-family: "Mulish";
+    font-size: 17px;
+    gap: 10px;
+    font-weight: bold;
+    padding: 20px 20px;
+    & > div {
+      display: flex;
+      justify-content: space-between;
+      &:last-child {
+        & > .checkout-btn {
+          display: inline-block;
+          text-align: center;
+          cursor: pointer;
+          background-color: var(--naranja);
+          color: #000;
+          font-weight: bold;
+          border: none;
+          border-radius: 20px;
+          width: 80%;
+          padding: 15px 20px;
+          font-size: 20px;
+          transition: all 0.3s ease-in-out;
+          &:hover {
+            background-color: #000;
+            color: #fff;
+          }
+        }
+        justify-content: center;
+      }
+    }
+  }
+  
+  @media (min-width: 900px) {
+    .cart-subtotal {
+      padding: 30px 0;
+      width: 50%;
+      margin-left: auto;
+      gap: 0;
+      align-items: stretch;
+      & > div {
+        &:first-child {
+          border-top: 1px solid #ddd;
+        }
+        display: flex;
+        text-align: right;
+        border-bottom: 1px solid #ddd;
+        gap: 0;
+        & > * {
+          &:first-child {
+            border-left: 1px solid #ddd;
+          }
+          padding: 30px;
+          border-right: 1px solid #ddd;
+          padding-right: 20px;
+          flex: 1;
+        }
+        &:last-child {
+          margin-top: 30px;
+          border: none;
+          display: flex;
+          width: 300px;
+          align-self: flex-end;
+        }
+      }
+    }
+  }
+  
+  .empty-cart {
+    padding-top: 80px;
+    padding-bottom: 120px;
+  }
+  .empty-cart-btn {
+    margin-top: 20px;
+    border: 1px solid red;
+    display: inline-block;
+    text-align: center;
+    background-color: var(--naranja);
+    padding: 15px 0;
+    width: 300px;
+    font-weight: bold;
+    font-family: "Mulish";
+    color: #000;
+    font-size: 20px;
+    border-radius: 25px;
+    border: none;
+    &:hover {
+      background-color: #000;
+      color: #fff;
+    }
+  }
+  

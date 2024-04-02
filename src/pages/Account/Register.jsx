@@ -26,6 +26,13 @@ function Register() {
     })
 
     const [errorMessage, setErrorMessage] = useState("");
+    const [visiblePassword, setVisiblePassword] = useState(false);
+
+    const handleVisibilityPassword = () => {
+        setVisiblePassword(!visiblePassword);
+    }
+
+    const passwordImage = visiblePassword ? "/images/password-abierta.png" : "/images/password.png";
 
     const handleInput = (event) => {
         const {id, value} = event.target;
@@ -120,8 +127,9 @@ function Register() {
               <input onChange={handleInput} type="email" id="email"/>
           </div>
           <div className="form-info">
-              <label>Contraseña</label>
-              <input onChange={handleInput} type="password" id="password"/>
+            <label>Contraseña</label>
+            <input onChange={handleInput} type={visiblePassword ? "text" : "password"}id="password" />
+            <img src={passwordImage} onClick={handleVisibilityPassword} />
           </div>
           <div className="form-info">
               <label>Telefono</label>
